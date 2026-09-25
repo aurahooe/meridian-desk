@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Meridian</title>
+  <meta name="description" content="A small room that resets on the hour." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="grain" aria-hidden="true"></div>
+  <div class="wash" aria-hidden="true"></div>
+
+  <header class="top">
+    <a class="mark" href="#room">Meridian</a>
+    <p class="tick" id="tick">—</p>
+    <nav>
+      <button type="button" data-open="wall">The wall</button>
+      <button type="button" data-open="desk" id="deskBtn">Your desk</button>
+      <button type="button" id="authBtn">Sign in</button>
+    </nav>
+  </header>
+
+  <main id="room" class="room">
+    <section class="hour" id="hourCard">
+      <p class="kicker" id="hourKicker">This hour</p>
+      <h1 id="hourTitle">Loading the room…</h1>
+      <p class="lede" id="hourBody"></p>
+      <article class="featured" id="featured" hidden>
+        <p class="label">On the table</p>
+        <h2 id="featTitle"></h2>
+        <p id="featBody"></p>
+        <p class="by" id="featBy"></p>
+      </article>
+    </section>
+
+    <section class="wall" id="wall">
+      <div class="wall-head">
+        <h2>Public slips</h2>
+        <p>Anything marked public lands here. Private stays on your desk.</p>
+      </div>
+      <div class="cards" id="publicList"></div>
+    </section>
+  </main>
+
+  <aside class="sheet" id="desk" hidden>
+    <div class="sheet-inner">
+      <button class="close" type="button" data-close>×</button>
+      <h2>Your desk</h2>
+      <p class="hint" id="deskHint">Sign in to keep slips.</p>
+      <form id="noteForm" hidden>
+        <label>Title
+          <input name="title" maxlength="140" required placeholder="A heading that holds" />
+        </label>
+        <label>Body
+          <textarea name="body" maxlength="8000" required rows="8" placeholder="Write it the way you’d say it at 1am."></textarea>
+        </label>
+        <label class="check">
+          <input type="checkbox" name="is_public" />
+          Show this on the public wall
+        </label>
+        <button type="submit" class="solid">Save slip</button>
+      </form>
+      <div class="mine" id="mine"></div>
+    </div>
+  </aside>
+
+  <aside class="sheet" id="auth" hidden>
+    <div class="sheet-inner">
+      <button class="close" type="button" data-close>×</button>
+      <h2 id="authTitle">Sign in</h2>
+      <p class="hint">Email and password. No third-party maze.</p>
+      <form id="authForm">
+        <label>Email
+          <input type="email" name="email" required autocomplete="email" />
+        </label>
+        <label>Password
+          <input type="password" name="password" minlength="6" required autocomplete="current-password" />
+        </label>
+        <label>Handle <span class="muted">(for new accounts)</span>
+          <input name="handle" maxlength="24" pattern="[a-z0-9_]{3,24}" placeholder="ink_room" />
+        </label>
+        <p class="err" id="authErr" hidden></p>
+        <div class="row">
+          <button type="submit" class="solid" data-mode="in">Sign in</button>
+          <button type="submit" class="ghost" data-mode="up">Create account</button>
+        </div>
+      </form>
+    </div>
+  </aside>
+
+  <footer>
+    <p>The heading changes every hour. Your words stay until you delete them.</p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="app.js"></script>
+</body>
+</html>
